@@ -26,7 +26,7 @@ final class VaultStore: ObservableObject {
     private static let keyAccount = "vault-key"
     private static let backupPasswordAccount = "backup-password"
 
-    static var directory: URL {
+    nonisolated static var directory: URL {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         return base.appendingPathComponent("SuperOTP", isDirectory: true)
     }

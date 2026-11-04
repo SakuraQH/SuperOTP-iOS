@@ -36,8 +36,14 @@ jobs:
             -configuration Debug \
             -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath build/DerivedData \
+            ARCHS=arm64 \
             CODE_SIGNING_ALLOWED=NO \
             build > build.log 2>&1 || status=$?
-          grep -E 'error:|warning:' build.log | sort -u | head -300 || true
-          tail -n 20 build.log
+          echo "::group::Errors"
+          grep -E -A4 ': error:' build.log | head -400 || true
+          echo "::endgroup::"
+          echo "::group::Warnings"
+          grep -E ': warning:' build.log | sort -u | head -200 || true
+          echo "::endgroup::"
+          tail -n 25 build.log
           exit $status

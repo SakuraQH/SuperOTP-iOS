@@ -226,7 +226,7 @@ final class CameraModel: NSObject, ObservableObject, AVCaptureMetadataOutputObje
         didSet { applyTorch() }
     }
 
-    var onCode: ((String) -> Void)?
+    var onCode: (@MainActor (String) -> Void)?
     private let queue = DispatchQueue(label: "app.superotp.camera")
     private var configured = false
     private var delivered = false
@@ -289,7 +289,9 @@ final class CameraModel: NSObject, ObservableObject, AVCaptureMetadataOutputObje
         for object in metadataObjects {
             guard let code = object as? AVMetadataMachineReadableCodeObject, let value = code.stringValue, !value.isEmpty else { continue }
             delivered = true
-            onCode?(value)
+            let handler = onCode
+            // The metadata delegate queue is the main queue.
+            MainActor.assumeIsolated { handler?(value) }
             return
         }
     }
