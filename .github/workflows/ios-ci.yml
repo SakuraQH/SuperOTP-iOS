@@ -1,0 +1,41 @@
+name: iOS CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Test core package
+        working-directory: Packages/SuperOTPKit
+        run: swift test
+
+      - name: Build app for iOS Simulator
+        if: hashFiles('SuperOTP.xcodeproj/project.pbxproj') != ''
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project SuperOTP.xcodeproj \
+            -scheme SuperOTP \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            build 2>&1 | grep -E 'error:|warning:|BUILD (SUCCEEDED|FAILED)|\*\* ' || true
+          test "${PIPESTATUS[0]}" -eq 0
