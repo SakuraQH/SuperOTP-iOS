@@ -40,6 +40,18 @@ jobs:
       - name: Capture screenshots
         run: scripts/screenshots.sh build/DerivedData/Build/Products/Debug-iphonesimulator/SuperOTP.app
 
+      - name: Print downscaled screenshots
+        # Base64 JPEGs between markers, for environments that can read logs but not artifacts.
+        run: |
+          mkdir -p small
+          for f in screenshots/*.png; do
+            name=$(basename "$f" .png)
+            sips -Z 1300 -s format jpeg -s formatOptions 55 "$f" --out "small/$name.jpg" >/dev/null
+            echo "IMG-BEGIN $name"
+            base64 -i "small/$name.jpg" | fold -w 4000
+            echo "IMG-END $name"
+          done
+
       - uses: actions/upload-artifact@v4
         with:
           name: screenshots
