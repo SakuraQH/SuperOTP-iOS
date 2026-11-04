@@ -4,6 +4,17 @@ SuperOTP 的 iOS 版本：一个本地加密、离线可用的两步验证（TOT
 [Android 版](https://github.com/SakuraQH/SuperOTP) 对齐，备份格式与 Android 版和 CloudOTP 互通，
 界面和交互按 iOS 的设计规范重新设计。
 
+<p>
+  <img src="docs/screenshots/home.jpg" width="200" alt="首页">
+  <img src="docs/screenshots/home-dark.jpg" width="200" alt="深色模式">
+  <img src="docs/screenshots/home-zh.jpg" width="200" alt="中文界面">
+</p>
+<p>
+  <img src="docs/screenshots/import.jpg" width="200" alt="导入预览">
+  <img src="docs/screenshots/settings.jpg" width="200" alt="设置">
+  <img src="docs/screenshots/lock.jpg" width="200" alt="应用锁">
+</p>
+
 ## 功能
 
 - **验证码**：TOTP / HOTP，SHA1 / SHA256 / SHA512，6–8 位，自定义周期；倒计时环，最后 10 秒变橙、5 秒变红。
@@ -49,6 +60,9 @@ xcodebuild -project SuperOTP.xcodeproj -scheme SuperOTP -destination 'generic/pl
 ```
 
 GitHub Actions 会在每次推送时运行核心测试并构建 App（`.github/workflows/ios-ci.yml`）。
+`Screenshots` 工作流需手动触发：它在模拟器中用演示数据运行 Debug 版并截取主要界面。
+Debug 版支持启动参数 `-demoData YES`（填充演示账号）、`-screen settings|backup|groups|edit|import|select`
+（直接打开某个界面）以及 `-hideCodes NO`、`-theme dark` 等设置覆盖，Release 版不包含这些代码。
 
 ## 项目结构
 
