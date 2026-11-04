@@ -117,7 +117,12 @@ struct HomeView: View {
             Text("The link contains the secret key. Anyone who sees it can generate your codes.")
         }
         .importFlow(importFlow)
-        .onAppear(perform: consumePendingImport)
+        .onAppear {
+            consumePendingImport()
+            #if DEBUG
+            openDebugScreen()
+            #endif
+        }
         .onChange(of: router.pendingImportText) { _, _ in consumePendingImport() }
         .onChange(of: lock.isLocked) { _, _ in consumePendingImport() }
     }
@@ -496,6 +501,20 @@ struct HomeView: View {
         }
         importFlow.openText(text, vault: vault, toasts: toasts)
     }
+
+    #if DEBUG
+    private func openDebugScreen() {
+        switch DebugLaunch.screen {
+        case "settings", "backup": sheet = .settings
+        case "edit": if let first = sortAccounts(vault.accounts, settings.sort).first { sheet = .edit(first.id) }
+        case "add": sheet = .addManual(groupUid: nil)
+        case "groups": sheet = .groups
+        case "import": importFlow.openText(DebugLaunch.sampleImport, vault: vault, toasts: toasts)
+        case "select": if let first = sortAccounts(vault.accounts, settings.sort).first { startSelecting(first.id) }
+        default: break
+        }
+    }
+    #endif
 
     private func consumePendingImport() {
         guard let text = router.pendingImportText, !lock.isLocked, vault.state == .ready else { return }

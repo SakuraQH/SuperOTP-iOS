@@ -70,6 +70,9 @@ final class VaultStore: ObservableObject {
                 data = VaultData()
             }
             hasBackupPassword = (try? Keychain.read(Self.backupPasswordAccount))?.isEmpty == false
+            #if DEBUG
+            if DebugLaunch.seedIfRequested(&data) { persist() }
+            #endif
             publish()
             state = .ready
         } catch {

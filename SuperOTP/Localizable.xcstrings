@@ -1935,6 +1935,16 @@
         }
       }
     },
+    "Personal": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "个人"
+          }
+        }
+      }
+    },
     "Photos": {
       "localizations": {
         "zh-Hans": {
@@ -2819,6 +2829,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "超出后自动删除最旧的备份，设为 0 表示全部保留。"
+          }
+        }
+      }
+    },
+    "Work": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "工作"
           }
         }
       }

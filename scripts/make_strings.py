@@ -48,6 +48,8 @@ def looks_like_ui_text(key):
         return False
     if re.fullmatch(r"[a-z0-9.\-%@lld:]+", key) or re.fullmatch(r"[A-Z]{3,5}", key):
         return False
+    if re.fullmatch(r"[a-z][A-Za-z0-9]*", key):
+        return False
     if re.fullmatch(r"[#%@lld ·]+", key) or key.startswith(("Keychain:", "OSStatus")):
         return False
     return re.search(r"[A-Za-z]{2}", key) is not None

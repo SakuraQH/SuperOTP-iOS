@@ -6,6 +6,9 @@ struct SettingsView: View {
     @EnvironmentObject private var lock: AppLock
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
+    #if DEBUG
+    @State private var debugBackup = DebugLaunch.screen == "backup"
+    #endif
 
     var body: some View {
         NavigationStack {
@@ -130,6 +133,9 @@ struct SettingsView: View {
                 }
             }
             .animation(.default, value: settings.appLock)
+            #if DEBUG
+            .navigationDestination(isPresented: $debugBackup) { BackupView() }
+            #endif
         }
     }
 

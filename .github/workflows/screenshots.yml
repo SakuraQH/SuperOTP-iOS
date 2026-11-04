@@ -1,0 +1,47 @@
+name: Screenshots
+
+# Runs the Debug build in the iOS Simulator with demo data and captures the main screens.
+on:
+  workflow_dispatch:
+
+jobs:
+  screenshots:
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build for the simulator
+        run: |
+          xcodebuild \
+            -project SuperOTP.xcodeproj \
+            -scheme SuperOTP \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build/DerivedData \
+            ARCHS=arm64 \
+            CODE_SIGNING_ALLOWED=NO \
+            build > build.log 2>&1 || { grep -E -A4 ': error:' build.log; tail -n 40 build.log; exit 1; }
+
+      - name: Boot a simulator
+        run: |
+          UDID=$(xcrun simctl list devices available -j | python3 -c '
+          import json, sys
+          devices = json.load(sys.stdin)["devices"]
+          phones = [d for runtime, items in devices.items() if "iOS" in runtime for d in items if d["name"].startswith("iPhone")]
+          preferred = [d for d in phones if d["name"] == "iPhone 16 Pro"] or phones
+          print(preferred[-1]["udid"])
+          ')
+          echo "UDID=$UDID" >> "$GITHUB_ENV"
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl status_bar "$UDID" override --time 9:41 --dataNetwork wifi --wifiBars 3 --cellularBars 4 --batteryState charged --batteryLevel 100
+
+      - name: Capture screenshots
+        run: scripts/screenshots.sh build/DerivedData/Build/Products/Debug-iphonesimulator/SuperOTP.app
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: screenshots
+          retention-days: 14
