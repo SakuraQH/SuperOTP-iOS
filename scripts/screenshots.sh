@@ -35,4 +35,4 @@ shot 10-groups -demoData YES -screen groups
 shot 11-home-zh -demoData YES -hideCodes NO -AppleLanguages "(zh-Hans)" -AppleLocale zh_CN
 shot 12-settings-zh -demoData YES -screen settings -AppleLanguages "(zh-Hans)" -AppleLocale zh_CN
 shot 13-import-zh -demoData YES -screen import -AppleLanguages "(zh-Hans)" -AppleLocale zh_CN
-shot 14-lock -demoData YES -appLock YES
+shot 14-lock -demoData YES -appLock YES -noAutoPrompt YES

@@ -273,7 +273,7 @@ ZH = {
     "Work": "工作",
     "Works offline. The only network request is fetching a website icon when you ask for one.": "离线可用。唯一的联网操作是在你需要时获取网站图标。",
     "Wrong password, or the file is damaged": "密码不对或文件已损坏",
-    "Your accounts could not be opened. If the device was just restarted, unlock it and try again.\n\n%@": "无法打开账号数据。如果设备刚刚重启，请先解锁设备再重试。\n\n%@",
+    "Your accounts could not be opened. If the device was just restarted, unlock it and try again.\n\n%@": "暂时无法读取账号。如果设备刚刚重启，请先解锁设备再重试。\n\n%@",
 }
 ZH = {k: v for k, v in ZH.items() if v is not None}
 

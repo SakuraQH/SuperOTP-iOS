@@ -25,6 +25,9 @@ enum Keychain {
         ]
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
+        #if DEBUG && targetEnvironment(simulator)
+        if status == errSecMissingEntitlement { return UnsignedSimulatorStore.read(account) }
+        #endif
         switch status {
         case errSecSuccess: return result as? Data
         case errSecItemNotFound: return nil
@@ -47,6 +50,9 @@ enum Keychain {
             let item = match.merging(attributes) { _, new in new }
             status = SecItemAdd(item as CFDictionary, nil)
         }
+        #if DEBUG && targetEnvironment(simulator)
+        if status == errSecMissingEntitlement { return UnsignedSimulatorStore.write(data, account: account) }
+        #endif
         guard status == errSecSuccess else { throw KeychainError(status: status) }
     }
 
@@ -59,3 +65,18 @@ enum Keychain {
         SecItemDelete(query as CFDictionary)
     }
 }
+
+#if DEBUG && targetEnvironment(simulator)
+/// Unsigned simulator builds (as made in CI) get no Keychain entitlement. Debug simulator
+/// builds then keep the items in UserDefaults so the app can still be run and screenshotted.
+/// This code is not compiled for devices or Release builds.
+private enum UnsignedSimulatorStore {
+    static func read(_ account: String) -> Data? {
+        UserDefaults.standard.data(forKey: "debug-keychain-" + account)
+    }
+
+    static func write(_ data: Data, account: String) {
+        UserDefaults.standard.set(data, forKey: "debug-keychain-" + account)
+    }
+}
+#endif

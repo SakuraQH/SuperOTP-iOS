@@ -25,6 +25,10 @@ final class AppLock: ObservableObject {
         self.settings = settings
         isLocked = settings.appLock
         promptPending = settings.appLock
+        #if DEBUG
+        // Screenshots of the lock screen itself, without the system prompt on top.
+        if UserDefaults.standard.bool(forKey: "noAutoPrompt") { promptPending = false }
+        #endif
     }
 
     var biometry: Biometry {
