@@ -445,7 +445,7 @@ struct MoveToGroupSheet: View {
         Button(action: action) {
             HStack(spacing: 12) {
                 SettingsIcon(symbol: symbol, color: color)
-                Text(title).foregroundStyle(.primary).lineLimit(1)
+                Text(title).foregroundStyle(Color.primary).lineLimit(1)
                 Spacer()
                 if checked {
                     Image(systemName: "checkmark").foregroundStyle(.tint).fontWeight(.semibold)

@@ -28,9 +28,9 @@ enum ThemeChoice: String, CaseIterable, Identifiable {
 extension DisplayMode {
     var label: LocalizedStringKey {
         switch self {
-        case .issuer: return "Service Only"
-        case .account: return "Account Only"
-        case .both: return "Service and Account"
+        case .issuer: return "Service"
+        case .account: return "Account"
+        case .both: return "Both"
         }
     }
 }

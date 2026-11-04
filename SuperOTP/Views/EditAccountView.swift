@@ -81,13 +81,13 @@ struct EditAccountView: View {
                             revealSecret.toggle()
                         } label: {
                             Image(systemName: revealSecret ? "eye.slash" : "eye")
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                         }
                         .buttonStyle(.borderless)
                         .accessibilityLabel(revealSecret ? Text("Hide Setup Key") : Text("Show Setup Key"))
                     }
                 } header: {
-                    Text("Account")
+                    Text("Account Details")
                 } footer: {
                     if let error, error == .name || error == .secret {
                         Text(error.message).foregroundStyle(.red)

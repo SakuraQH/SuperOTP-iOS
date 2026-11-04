@@ -234,7 +234,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "基本信息"
+            "value": "仅账号"
           }
         }
       }
@@ -259,12 +259,12 @@
         }
       }
     },
-    "Account Only": {
+    "Account Details": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "仅账号"
+            "value": "基本信息"
           }
         }
       }
@@ -715,6 +715,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "备份采用 CloudOTP 格式，可以在 Android 版 SuperOTP 和 CloudOTP 中恢复。"
+          }
+        }
+      }
+    },
+    "Both": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "服务名和账号"
           }
         }
       }
@@ -2213,32 +2223,22 @@
         }
       }
     },
+    "Service": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仅服务名"
+          }
+        }
+      }
+    },
     "Service (e.g. GitHub)": {
       "localizations": {
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
             "value": "服务名（如 GitHub）"
-          }
-        }
-      }
-    },
-    "Service and Account": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "服务名和账号"
-          }
-        }
-      }
-    },
-    "Service Only": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "仅服务名"
           }
         }
       }

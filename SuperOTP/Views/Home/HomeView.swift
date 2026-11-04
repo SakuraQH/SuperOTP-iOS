@@ -322,6 +322,7 @@ struct HomeView: View {
                     .disabled(selection.isEmpty)
                 Spacer()
                 Button("Delete", role: .destructive) { pendingDelete = Array(selection) }
+                    .tint(.red)
                     .disabled(selection.isEmpty)
             }
         } else {

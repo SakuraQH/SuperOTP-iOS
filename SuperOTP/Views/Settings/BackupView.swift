@@ -282,6 +282,7 @@ private struct BackupStatusCard: View {
         }
         .foregroundStyle(ready ? Color.white : Color.primary)
         .padding(20)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background {
             if ready {
                 RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Brand.gradient)
@@ -324,10 +325,10 @@ private struct SetupRow: View {
                     .offset(x: 5, y: 5)
             }
             VStack(alignment: .leading, spacing: 2) {
-                Text(title).foregroundStyle(.primary)
+                Text(title).foregroundStyle(Color.primary)
                 subtitle
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
                     .lineLimit(1)
             }
             Spacer(minLength: 8)
@@ -461,7 +462,7 @@ private struct BackupListSheet: View {
             VStack(alignment: .leading, spacing: 2) {
                 HStack(spacing: 6) {
                     Text(entry.modifiedAt, format: .dateTime.year().month().day().hour().minute())
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(Color.primary)
                     if latest {
                         Text("Latest")
                             .font(.caption2.weight(.semibold))
@@ -473,7 +474,7 @@ private struct BackupListSheet: View {
                 }
                 Text(verbatim: "\(entry.modifiedAt.formatted(.relative(presentation: .named))) · \(ByteCountFormatter.string(fromByteCount: Int64(entry.size), countStyle: .file))")
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(Color.secondary)
             }
         }
     }

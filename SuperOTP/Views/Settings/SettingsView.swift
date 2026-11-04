@@ -43,13 +43,13 @@ struct SettingsView: View {
                     } label: {
                         HStack {
                             SettingsLabel("Language", symbol: "globe", color: .blue)
-                                .foregroundStyle(.primary)
+                                .foregroundStyle(Color.primary)
                             Spacer()
                             Text(verbatim: currentLanguage)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(Color.secondary)
                             Image(systemName: "arrow.up.forward.app")
                                 .font(.footnote)
-                                .foregroundStyle(.tertiary)
+                                .foregroundStyle(Color(.tertiaryLabel))
                         }
                     }
                     Picker(selection: $settings.display) {
