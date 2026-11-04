@@ -1,3 +1,4 @@
+import SuperOTPKit
 import SwiftUI
 
 struct SettingsView: View {
