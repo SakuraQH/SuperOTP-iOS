@@ -19,3 +19,6 @@ Packages/*/Package.resolved
 
 # macOS
 .DS_Store
+
+# Python
+__pycache__/

@@ -15,7 +15,7 @@ jobs:
     runs-on: macos-15
     timeout-minutes: 40
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Toolchain
         run: |
@@ -29,7 +29,7 @@ jobs:
       - name: Build app for iOS Simulator
         if: hashFiles('SuperOTP.xcodeproj/project.pbxproj') != ''
         run: |
-          set -o pipefail
+          status=0
           xcodebuild \
             -project SuperOTP.xcodeproj \
             -scheme SuperOTP \
@@ -37,5 +37,7 @@ jobs:
             -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath build/DerivedData \
             CODE_SIGNING_ALLOWED=NO \
-            build 2>&1 | grep -E 'error:|warning:|BUILD (SUCCEEDED|FAILED)|\*\* ' || true
-          test "${PIPESTATUS[0]}" -eq 0
+            build > build.log 2>&1 || status=$?
+          grep -E 'error:|warning:' build.log | sort -u | head -300 || true
+          tail -n 20 build.log
+          exit $status
